@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_09_213229) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_13_214618) do
   create_table "episodes", force: :cascade do |t|
     t.string "title"
     t.string "plot"
@@ -26,6 +26,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_213229) do
     t.string "plot"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "purchase_options_id"
+    t.index ["purchase_options_id"], name: "index_movies_on_purchase_options_id"
+  end
+
+  create_table "purchase_options", force: :cascade do |t|
+    t.float "price", default: 2.99
+    t.integer "video_quality"
   end
 
   create_table "seasons", force: :cascade do |t|
@@ -34,6 +41,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_09_213229) do
     t.integer "number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "purchase_options_id"
+    t.index ["purchase_options_id"], name: "index_seasons_on_purchase_options_id"
   end
 
   add_foreign_key "episodes", "seasons"
