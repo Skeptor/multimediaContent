@@ -2,13 +2,21 @@ require 'rails_helper'
 require 'database_cleaner/active_record'
 
 describe Api::V1::EpisodesController, type: :request do
+    let ( :season ) { create(:season) }
+    let (:episodes) { create_list(:episode, 5, season: season)}
+
     describe 'GET #index' do
-        it "request list of all espisodes of a season" do
-            @season = Season.create(title: "Test season", plot: "Test", number: 1)
-            Episode.create(title: "Test espisode", plot: "Test", number: 1, season_id: @season.id)
-            get "/api/v1/seasons/#{@season.id}/episodes"
+        
+        it "return a successful response" do
+            get "/api/v1/seasons/#{season.id}/episodes"
+
             expect(response).to be_successful
-            expect(response.body).to include("Test espisode")
+        end
+
+        it "request list of all espisodes of a season" do
+            get "/api/v1/seasons/#{season.id}/episodes"
+            
+            expect{ episodes }.to change { Episode.count }.by(5)
         end
     end
 end
