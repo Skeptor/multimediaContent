@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_13_214618) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_14_220705) do
   create_table "episodes", force: :cascade do |t|
     t.string "title"
     t.string "plot"
@@ -33,6 +33,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_13_214618) do
   create_table "purchase_options", force: :cascade do |t|
     t.float "price", default: 2.99
     t.integer "video_quality"
+    t.string "payment_type"
+    t.integer "payment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["payment_type", "payment_id"], name: "index_purchase_options_on_payment"
   end
 
   create_table "seasons", force: :cascade do |t|

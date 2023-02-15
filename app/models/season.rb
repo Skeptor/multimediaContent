@@ -1,6 +1,6 @@
 class Season < ApplicationRecord
     has_many :episodes, -> { order(:number)}, inverse_of: :season, dependent: :destroy
-    has_many :purchase_options
+    has_many :purchase_options, :as => :payment
     
     validates :title, presence: true
     validates :plot, presence: true

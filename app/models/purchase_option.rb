@@ -1,5 +1,6 @@
 class PurchaseOption < ApplicationRecord
-    enum :video_quality, [HD: 0, SD: 1]
+    belongs_to :payment, polymorphic: true
+    enum :video_quality, [:HD, :SD]
 
     validates :price, presence: true
     validates :video_quality, presence: true

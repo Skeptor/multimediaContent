@@ -1,24 +1,43 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### API to manage multimedia content.
 
-Things you may want to cover:
+### Capabilities:
+```
+Api::V1::ContentsController
+  GET #index
+    request list of all movies and seasons
 
-* Ruby version
+Api::V1::EpisodesController
+  GET #index
+    request list of all espisodes of a season
 
-* System dependencies
+Api::V1::MoviesController
+  GET #index
+    request list of all movies
 
-* Configuration
+Api::V1::SeasonsController
+  GET #index
+    request list of all seasons
 
-* Database creation
+Episode
+  is not valid without valid attributes
+  is valid with valid attributes
+  is not valid without a title
+  is not valid without a plot
+  is not valid without a number
+  is not valid without a season
 
-* Database initialization
+Movie
+  is not valid without valid attributes
+  is valid with valid attributes
+  is not valid without a title
+  is not valid without a plot
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Season
+  is not valid without valid attributes
+  is valid with valid attributes
+  is not valid without a title
+  is not valid without a plot
+  is not valid without a number
+```
