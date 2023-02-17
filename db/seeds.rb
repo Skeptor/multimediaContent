@@ -6,11 +6,10 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-PurchaseOption.create(video_quality: :HD)
-PurchaseOption.create(video_quality: :SD)
-
 (1..3).each do |season_number|
     season = Season.create(title: "The Office", plot: Faker::Lorem.sentence(word_count: 5), number: season_number)
+    PurchaseOption.create(video_quality: :HD, payment: season)
+    PurchaseOption.create(video_quality: :SD, payment: season)
     if season.save
         season.purchase_options = PurchaseOption.all
         (1..5).each do |episode_number|
@@ -18,12 +17,17 @@ PurchaseOption.create(video_quality: :SD)
         end
     end
 end
+
 (1..10).each {
      movie = Movie.create(title: Faker::Movie.unique.title, plot: Faker::Lorem.sentence(word_count: 5))
-     movie.purchase_options = PurchaseOption.all
+     PurchaseOption.create(video_quality: :HD, payment: movie)
+     PurchaseOption.create(video_quality: :SD, payment: movie)
 }
+
 (1..3).each do |season_number|
     season = Season.create(title: "Simpsons", plot: Faker::Lorem.sentence(word_count: 5), number: season_number)
+    PurchaseOption.create(video_quality: :HD, payment: season)
+    PurchaseOption.create(video_quality: :SD, payment: season)
     season.purchase_options = PurchaseOption.all
     if season.save
         (1..5).each do |episode_number|
