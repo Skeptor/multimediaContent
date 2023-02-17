@@ -28,7 +28,6 @@ end
     season = Season.create(title: "Simpsons", plot: Faker::Lorem.sentence(word_count: 5), number: season_number)
     PurchaseOption.create(video_quality: :HD, payment: season)
     PurchaseOption.create(video_quality: :SD, payment: season)
-    season.purchase_options = PurchaseOption.all
     if season.save
         (1..5).each do |episode_number|
             season.episodes.create(title: "Episode " + Faker::TvShows::Simpsons.character, plot: Faker::Lorem.sentence(word_count: 5), number: episode_number)
