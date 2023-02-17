@@ -2,6 +2,7 @@ require 'rails_helper'
 require 'database_cleaner/active_record'
 
 RSpec.describe Movie, :type => :model do
+    it_behaves_like "payment"
 
     it "is not valid without valid attributes" do
         expect(Movie.new).not_to be_valid

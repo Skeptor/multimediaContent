@@ -39,8 +39,9 @@ Movie
   is not valid without a plot
 
 PurchaseOption
-  add some examples to (or delete) /root/contentAPI/content-api/spec/app/models/purchase_option_spec.rb (PENDING: Not yet implemented)
-
+  is expected to have db column named payment_id of type integer
+  is expected to have db column named payment_type of type string
+  is expected to belong to payment required: true
 Season
   is not valid without valid attributes
   is valid with valid attributes
