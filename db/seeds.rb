@@ -34,3 +34,7 @@ end
         end
     end
 end
+
+(1..3).each {
+    User.create(email: Faker::Internet.unique.email)
+}
