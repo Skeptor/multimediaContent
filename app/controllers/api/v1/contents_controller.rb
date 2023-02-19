@@ -11,7 +11,12 @@ class Api::V1::ContentsController < ApplicationController
     private
     def addToContent(content, objectList)
         objectList.each do |o|
-            content << { :title => o.title, :plot => o.plot, :created_at => o.created_at }
+            if(o.has_attribute?('number'))
+                content << { :title => o.title, :plot => o.plot, :number => o.number, :created_at => o.created_at }
+            else
+                content << { :title => o.title, :plot => o.plot, :created_at => o.created_at }
+    
+            end
         end
     end
 end
