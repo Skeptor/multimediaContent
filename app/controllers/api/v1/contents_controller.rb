@@ -8,6 +8,15 @@ class Api::V1::ContentsController < ApplicationController
         render json: @content.sort_by{|c| c[:created_at]}, status:200
     end
 
+    def purchase(content_id, content_class, user_id)
+        
+        if(@content = Library.find(user_id, content_id, content_class))
+            Library.update(user_id: user_id, content_id: content_id, content_type: content_class)
+        else
+            Library.create(user_id: user_id, content_id: content_id, content_type: content_class)
+        end
+    end
+
     private
     def addToContent(content, objectList)
         objectList.each do |o|
