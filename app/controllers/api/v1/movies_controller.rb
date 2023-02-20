@@ -14,20 +14,6 @@ class Api::V1::MoviesController < ApplicationController
     end
   end
 
-  def purchase
-    if(@content = Library.find_by(user_id: params[:user_id], content_id: params[:movie_id], content_type: "Movie"))
-      
-      if(@content.expiration_date > DateTime.now)
-        render json: {error: "The movie is alive in the user library."}
-      end
-
-      @content.expiration_date = DateTime.now + 2.days
-      @content.save
-    else
-      Library.create(user_id: params[:user_id], content_id: params[:movie_id], content_type: "Movie", expiration_date: DateTime.now + 2.days)
-    end
-  end
-
   def create
     @movie = Movie.new(movie_params)
 
