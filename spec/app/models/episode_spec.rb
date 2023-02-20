@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Episode, :type => :model do
+RSpec.describe Episode, type: :model do
 
     before(:each) do
         @season = Season.create(title: "Test", plot: "Test", number: 1)

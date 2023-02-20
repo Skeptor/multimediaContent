@@ -36,6 +36,20 @@ class Api::V1::SeasonsController < ApplicationController
     @season.destroy
   end
 
+  def purchase
+    if(@content = Library.find_by(user_id: params[:user_id], content_id: params[:season_id], content_type: "Season"))
+      
+      if(@content.expiration_date > DateTime.now)
+        render json: {error: "The season is alive in the user library."}
+      end
+
+      @content.expiration_date = DateTime.now + 2.days
+      @content.save
+    else
+      Library.create(user_id: params[:user_id], content_id: params[:season_id], content_type: "Season", expiration_date: DateTime.now + 2.days)
+    end
+  end
+
   private
 
   def set_season
