@@ -9,6 +9,7 @@ class Api::V1::ContentsController < ApplicationController
     end
 
     private
+    
     def addToContent(content, objectList)
         objectList.each do |o|
             if(o.has_attribute?('number'))

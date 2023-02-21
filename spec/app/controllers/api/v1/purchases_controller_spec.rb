@@ -38,10 +38,12 @@ describe Api::V1::PurchasesController, type: :request do
 
         it "fails when the user try to purchase a movie that is already in his library" do
             purchase_movie
-            expect{purchase_movie}.to change(Library, :count).by(1)
+            expect(response).to be_successful
             
             purchase_movie
-            expect{purchase_movie}.not_to change(Library, :count).by(1)
+            expect(response.status).to eq 400
+            expect(JSON.parse(response.body)["error"]).to eq("The Movie is alive in the user library.")
+
         end
 
         it "raise an error when there are missing parameters in the purchase" do

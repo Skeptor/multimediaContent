@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
       get '/contents', to: 'contents#index'
       post '/purchase', to: 'purchases#index'
+    
+      resources :users, only: [:show]
 
     end
   end
