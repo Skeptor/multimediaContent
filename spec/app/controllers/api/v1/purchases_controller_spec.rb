@@ -7,29 +7,47 @@ describe Api::V1::PurchasesController, type: :request do
     let(:user) { create(:user) }
 
     describe 'POST #purchase' do
+        let(:movie_params) { 
+            {user_id: user.id,
+            content_id: movie.id,
+            content_type: "Movie",
+            video_quality: 1
+            }
+        }
+        let(:season_params) { 
+            {user_id: user.id,
+            content_id: season.id,
+            content_type: "Season",
+            video_quality: 1
+            }
+        }
+        let(:purchase_movie){post "/api/v1/purchase", params: movie_params}
+        let(:purchase_season){post "/api/v1/purchase", params: season_params}
+
         it "purchase a movie succesfully" do
-            post "/api/v1/purchase/?user_id=#{user.id}&content_id=#{movie.id}&content_type=Movie&video_quality=1"
+            purchase_movie
 
             expect(response).to be_successful
         end
 
         it "purchase a season succesfully" do
-            post "/api/v1/purchase/?user_id=#{user.id}&content_id=#{season.id}=1&content_type=Season&video_quality=0"
+            purchase_season
 
             expect(response).to be_successful
         end
 
         it "fails when the user try to purchase a movie that is already in his library" do
-            post "/api/v1/purchase/?user_id=#{user.id}&content_id=#{movie.id}&content_type=Movie&video_quality=1"
-            expect(response).to be_successful
+            purchase_movie
+            expect{purchase_movie}.to change(Library, :count).by(1)
             
-            post "/api/v1/purchase/?user_id=#{user.id}&content_id=#{movie.id}&content_type=Movie&video_quality=1"
-            expect(response).not_to be_successful
+            purchase_movie
+            expect{purchase_movie}.not_to change(Library, :count).by(1)
         end
 
-        it "fails when there are missing parameters in the post petition" do
-            post "/api/v1/purchase/?user_id=#{user.id}&content_type=Movie&video_quality=1"
-            expect(response).not_to be_successful
+        it "raise an error when there are missing parameters in the purchase" do
+            expect{
+                post "/api/v1/purchase"
+            }.to raise_error ActionController::ParameterMissing
         end
     end
 end
