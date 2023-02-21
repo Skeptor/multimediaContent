@@ -1,5 +1,6 @@
 class Api::V1::PurchasesController < ApplicationController
-    
+    before_action :ensure_purchase_params, only: :index
+
     def index
         if(@content = Library.find_by(user_id: params[:user_id], content_id: params[:content_id], content_type: params[:content_type]))
         
@@ -17,5 +18,11 @@ class Api::V1::PurchasesController < ApplicationController
             Library.create(user_id: params[:user_id], content_id: params[:content_id], content_type: params[:content_type], video_quality: params[:video_quality], expiration_date: DateTime.now + 2.days)
             render json: {response: "The #{params[:content_type]} has been added to user library"}, status: 200
         end
+    end
+
+    private
+
+    def ensure_purchase_params
+        params.require([:user_id, :content_id, :content_type, :video_quality])
     end
 end
