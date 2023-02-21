@@ -2,8 +2,8 @@ require 'rails_helper'
 require 'database_cleaner/active_record'
 
 describe Api::V1::EpisodesController, type: :request do
-    let ( :season ) { create(:season) }
-    let (:episodes) { create_list(:episode, 5, season: season)}
+    let(:season) { create(:season) }
+    let(:episodes) { create_list(:episode, 5, season: season)}
 
     describe 'GET #index' do
         
