@@ -7,7 +7,7 @@ module Api
 
       def create
         if (@content = Purchase.find_by(user_id: params[:user_id], content_id: params[:content_id],
-                                       content_type: params[:content_type]))
+                                       content_type: params[:content_type],video_quality: params[:video_quality]))
 
           if @content.expiration_date > DateTime.now
             return render json: { error: "The #{@content.content_type} is alive in the user library." }, status: 400

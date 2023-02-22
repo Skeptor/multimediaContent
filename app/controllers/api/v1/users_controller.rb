@@ -7,11 +7,11 @@ module Api
 
       def library
         library = []
-        user_content = Purchase.where(user_id: @user.id).where('expiration_date > ?', DateTime.now)
+        user_content = @user.purchases.where('expiration_date > ?', DateTime.now).order(:expiration_date)
         add_to_library(library, Movie.where(id: user_content.select(:content_id).where(content_type: 'Movie')))
         add_to_library(library, Season.where(id: user_content.select(:content_id).where(content_type: 'Season')))
 
-        render json: library, status: 200
+        render json: user_content, status: 200
       end
 
       private
