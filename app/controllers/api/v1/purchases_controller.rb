@@ -6,7 +6,7 @@ module Api
       before_action :ensure_purchase_params, only: :create
 
       def create
-        if (@content = Library.find_by(user_id: params[:user_id], content_id: params[:content_id],
+        if (@content = Purchase.find_by(user_id: params[:user_id], content_id: params[:content_id],
                                        content_type: params[:content_type]))
 
           if @content.expiration_date > DateTime.now
@@ -20,7 +20,7 @@ module Api
             render json: { error: "The #{@content.content_type} couldn\'t be saved in user library." }, status: 400
           end
         else
-          Library.create(user_id: params[:user_id], content_id: params[:content_id],
+          Purchase.create(user_id: params[:user_id], content_id: params[:content_id],
                          content_type: params[:content_type], video_quality: params[:video_quality], expiration_date: DateTime.now + 2.days)
           render json: { response: "The #{params[:content_type]} has been added to user library." }, status: 200
         end
