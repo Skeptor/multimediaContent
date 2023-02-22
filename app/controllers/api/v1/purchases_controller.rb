@@ -1,7 +1,7 @@
 class Api::V1::PurchasesController < ApplicationController
-    before_action :ensure_purchase_params, only: :index
+    before_action :ensure_purchase_params, only: :create
 
-    def index
+    def create
         if(@content = Library.find_by(user_id: params[:user_id], content_id: params[:content_id], content_type: params[:content_type]))
         
             if(@content.expiration_date > DateTime.now)
@@ -10,13 +10,13 @@ class Api::V1::PurchasesController < ApplicationController
 
         @content.expiration_date = DateTime.now + 2.days
             if @content.save
-                render json: { response: "The #{@content.content_type} has been updated in user library"}, status: 200
+                render json: { response: "The #{@content.content_type} has been updated in user library."}, status: 200
             else
                 render json: {error: "The #{@content.content_type} couldn\'t be saved in user library."}, status: 400
             end
         else
             Library.create(user_id: params[:user_id], content_id: params[:content_id], content_type: params[:content_type], video_quality: params[:video_quality], expiration_date: DateTime.now + 2.days)
-            render json: {response: "The #{params[:content_type]} has been added to user library"}, status: 200
+            render json: {response: "The #{params[:content_type]} has been added to user library."}, status: 200
         end
     end
 

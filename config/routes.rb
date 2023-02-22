@@ -8,9 +8,11 @@ Rails.application.routes.draw do
       end
 
       get '/contents', to: 'contents#index'
-      post '/purchase', to: 'purchases#index'
+      post '/purchase', to: 'purchases#create'
     
-      resources :users, only: [:show]
+      resources :users do
+        get :library, on: :member
+      end
 
     end
   end
