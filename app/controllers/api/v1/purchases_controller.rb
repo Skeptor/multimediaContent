@@ -1,28 +1,36 @@
-class Api::V1::PurchasesController < ApplicationController
-    before_action :ensure_purchase_params, only: :create
+# frozen_string_literal: true
 
-    def create
-        if(@content = Library.find_by(user_id: params[:user_id], content_id: params[:content_id], content_type: params[:content_type]))
-        
-            if(@content.expiration_date > DateTime.now)
-                return render json: {error: "The #{@content.content_type} is alive in the user library."}, status: 400
-            end
+module Api
+  module V1
+    class PurchasesController < ApplicationController
+      before_action :ensure_purchase_params, only: :create
 
-        @content.expiration_date = DateTime.now + 2.days
-            if @content.save
-                render json: { response: "The #{@content.content_type} has been updated in user library."}, status: 200
-            else
-                render json: {error: "The #{@content.content_type} couldn\'t be saved in user library."}, status: 400
-            end
+      def create
+        if (@content = Library.find_by(user_id: params[:user_id], content_id: params[:content_id],
+                                       content_type: params[:content_type]))
+
+          if @content.expiration_date > DateTime.now
+            return render json: { error: "The #{@content.content_type} is alive in the user library." }, status: 400
+          end
+
+          @content.expiration_date = DateTime.now + 2.days
+          if @content.save
+            render json: { response: "The #{@content.content_type} has been updated in user library." }, status: 200
+          else
+            render json: { error: "The #{@content.content_type} couldn\'t be saved in user library." }, status: 400
+          end
         else
-            Library.create(user_id: params[:user_id], content_id: params[:content_id], content_type: params[:content_type], video_quality: params[:video_quality], expiration_date: DateTime.now + 2.days)
-            render json: {response: "The #{params[:content_type]} has been added to user library."}, status: 200
+          Library.create(user_id: params[:user_id], content_id: params[:content_id],
+                         content_type: params[:content_type], video_quality: params[:video_quality], expiration_date: DateTime.now + 2.days)
+          render json: { response: "The #{params[:content_type]} has been added to user library." }, status: 200
         end
-    end
+      end
 
-    private
+      private
 
-    def ensure_purchase_params
-        params.require([:user_id, :content_id, :content_type, :video_quality])
+      def ensure_purchase_params
+        params.require(%i[user_id content_id content_type video_quality])
+      end
     end
+  end
 end
