@@ -19,8 +19,12 @@ module Api
             render json: { error: "The #{@purchase.content_type} couldn\'t be saved in user library." }, status: 400
           end
         else
-          Purchase.new(ensure_purchase_params)
-          render json: { response: "The #{params[:content_type]} has been added to user library." }, status: 200
+          @purchase = Purchase.new(ensure_purchase_params)
+          if @purchase.save
+            render json: { response: "The #{params[:content_type]} has been added to user library." }, status: 200
+          else
+            render json: { error: "The #{@purchase.content_type} couldn\'t be saved in user library." }, status: 400
+          end
         end
       end
 
