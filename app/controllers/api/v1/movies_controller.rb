@@ -22,7 +22,7 @@ module Api
         @movie = Movie.new(movie_params)
 
         if @movie.save
-          render json: movie, status: 200
+          render json: @movie, status: 200
         else
           render json: { error: "Error creating movie #{@movie.title}" }
         end
@@ -30,7 +30,7 @@ module Api
 
       def update
         if @movie.update(movie_params)
-          render json: movie, status: 200
+          render json: @movie, status: 200
         else
           render json: { error: "Error updating movie #{@movie.title}" }
         end

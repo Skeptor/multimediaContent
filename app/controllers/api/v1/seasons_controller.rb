@@ -22,7 +22,7 @@ module Api
         @season = Season.new(season_params)
 
         if @season.save
-          render json: season, status: 200
+          render json: @season, status: 200
         else
           render json: { error: "Error creating season #{@season.title} #{@season.number}" }
         end
@@ -30,7 +30,7 @@ module Api
 
       def update
         if @season.update(season_params)
-          render json: season, status: 200
+          render json: @season, status: 200
         else
           render json: { error: "Error updating season #{@season.title}" }
         end

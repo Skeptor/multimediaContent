@@ -6,7 +6,7 @@ module Api
       before_action :ensure_purchase_params, only: :create
 
       def create
-        if (@purchase = Purchase.find_by(ensure_purchase_params))
+        if (@purchase = Purchase.find_by(purchase_params))
 
           if @purchase.expiration_date > DateTime.now
             return render json: { error: "The #{@purchase.content_type} is alive in the user library." }, status: 400
@@ -19,7 +19,7 @@ module Api
             render json: { error: "The #{@purchase.content_type} couldn\'t be saved in user library." }, status: 400
           end
         else
-          @purchase = Purchase.new(ensure_purchase_params)
+          @purchase = Purchase.new(purchase_params)
           if @purchase.save
             render json: { response: "The #{params[:content_type]} has been added to user library." }, status: 200
           else
@@ -29,8 +29,12 @@ module Api
       end
 
       private
-
+      
       def ensure_purchase_params
+        params.require(%i[user_id content_id content_type video_quality])
+      end
+
+      def purchase_params
         params.permit(:user_id, :content_id, :content_type, :video_quality)
       end
     end

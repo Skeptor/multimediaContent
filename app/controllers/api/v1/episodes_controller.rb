@@ -23,7 +23,7 @@ module Api
         @episode = @season.comments.build(episode_params)
 
         if @episode.save
-          render json: episode, status: 200
+          render json: @episode, status: 200
         else
           render json: { error: "Error creating episode #{@episode.title} #{@episode.number}" }
         end
@@ -31,7 +31,7 @@ module Api
 
       def update
         if @episode.update(episode_params)
-          render json: episode, status: 200
+          render json: @episode, status: 200
         else
           render json: { error: "Error updating episode #{@episode.title}" }
         end
