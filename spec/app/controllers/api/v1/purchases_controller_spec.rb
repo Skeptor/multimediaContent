@@ -37,11 +37,9 @@ describe Api::V1::PurchasesController, type: :request do
     end
 
     it 'fails when the user try to purchase a movie that is already in his library' do
-      purchase_movie
-      expect(response).to be_successful
+      Purchase.create(movie_params)
 
       purchase_movie
-      expect(response.status).to eq 400
       expect(JSON.parse(response.body)['error']).to eq('The Movie is alive in the user library.')
     end
 

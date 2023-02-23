@@ -52,7 +52,7 @@ module Api
       end
 
       def episode_params
-        params.require(:episode).permit(:title, :plot, :number, :season_id)
+        params.permit(:title, :plot, :number, :season_id)
       end
     end
   end
