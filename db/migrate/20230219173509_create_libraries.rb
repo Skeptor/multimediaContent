@@ -8,7 +8,5 @@ class CreateLibraries < ActiveRecord::Migration[7.0]
       t.integer 'user_id', null: false
       t.timestamps
     end
-
-    add_index :same_type_of_content, %i[content_id content_type], unique: true
   end
 end
