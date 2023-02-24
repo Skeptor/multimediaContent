@@ -16,7 +16,7 @@ module Api
           if @purchase.save
             render json: { response: "The #{@purchase.content_type} has been updated in user library." }, status: 200
           else
-            render json: { error: "The #{@purchase.content_type} couldn\'t be saved in user library." }, status: 400
+            render json: { error: "The #{@purchase.content_type} couldn\'t be updated in user library." }, status: 400
           end
         else
           @purchase = Purchase.new(purchase_params)
