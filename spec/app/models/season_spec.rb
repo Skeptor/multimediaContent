@@ -4,7 +4,6 @@ require 'rails_helper'
 require 'database_cleaner/active_record'
 
 RSpec.describe Season, type: :model do
-  it_behaves_like 'payment'
 
   it 'is not valid without valid attributes' do
     expect(Season.new).not_to be_valid

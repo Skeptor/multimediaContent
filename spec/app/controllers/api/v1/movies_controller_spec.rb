@@ -15,7 +15,18 @@ describe Api::V1::MoviesController, type: :request do
 
     it 'request list of all movies' do
       get '/api/v1/movies'
+
       expect { movies }.to change { Movie.count }.by(5)
+    end
+  end
+
+  describe 'GET #show' do
+    let!(:movie) {create(:movie) }
+
+    it 'returns the Movie object by id' do
+      get '/api/v1/movies/', params: { id: movie.id }
+
+      expect(response).to be_successful
     end
   end
 end

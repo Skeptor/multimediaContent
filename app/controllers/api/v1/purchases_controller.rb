@@ -41,11 +41,11 @@ module Api
       end
 
       def ensure_purchase_params
-        params.require(%i[user_id content_id content_type video_quality])
+        params.require(%i[user_id content_id content_type purchase_option_id])
       end
 
       def purchase_params
-        params.permit(:user_id, :content_id, :content_type, :video_quality)
+        params.permit(:user_id, :content_id, :content_type, :purchase_option_id)
       end
     end
   end

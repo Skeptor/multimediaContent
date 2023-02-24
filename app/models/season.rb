@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Season < ApplicationRecord
-  include Payment
   has_many :episodes, -> { order(:number) }, inverse_of: :season, dependent: :destroy
 
   validates :title, presence: true

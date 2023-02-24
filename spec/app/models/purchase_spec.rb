@@ -5,12 +5,13 @@ require 'rails_helper'
 RSpec.describe Purchase, type: :model do
   let(:movie) { create(:movie) }
   let(:user) { create(:user) }
+  let(:purchase_option) { create(:purchase_option)}
 
   let(:movie_params) do
     { user_id: user.id,
       content_id: movie.id,
       content_type: 'Movie',
-      video_quality: 1 }
+      purchase_option_id: purchase_option.id }
   end
 
   it 'is not valid without valid attributes' do
