@@ -28,6 +28,17 @@ describe Api::V1::PurchasesController, type: :request do
       expect{purchase_movie}.to change(Purchase, :count).by(0)
     end
 
+    it 'allows the user to purchase an expired movie' do
+
+      expect{purchase_movie}.to change(Purchase, :count).by(1)
+
+      purchase_movie.expiration_date = DateTime.now - 1
+      purchase_movie.save
+
+      expect{purchase_movie}.to change(Purchase, :count).by(0)
+      expect(purchase_movie.expiration_date).to eq(DateTime.now + Purchase::EXPIRATION_TIME)
+    end
+
     it 'raise an error when there are missing parameters in the purchase' do
       expect  do
         post '/api/v1/purchase'

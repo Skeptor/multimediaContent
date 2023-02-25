@@ -20,7 +20,7 @@ module Api
           return render json: { error: "The #{purchase.content_type} is alive in the user library." }, status: 400
         end
 
-        purchase.expiration_date = DateTime.now + 2.days
+        purchase.expiration_date = DateTime.now + Purchase::EXPIRATION_TIME
 
         if @purchase.save
           render json: { response: "The #{purchase.content_type} has been updated in user library." }, status: 200
