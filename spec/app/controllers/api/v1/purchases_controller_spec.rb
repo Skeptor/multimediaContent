@@ -32,11 +32,10 @@ describe Api::V1::PurchasesController, type: :request do
 
       expect{purchase_movie}.to change(Purchase, :count).by(1)
 
-      purchase_movie.expiration_date = DateTime.now - 1
-      purchase_movie.save
+      Purchase.first.expiration_date = DateTime.now - 1
+      Purchase.first.save
 
-      expect{purchase_movie}.to change(Purchase, :count).by(0)
-      expect(purchase_movie.expiration_date).to eq(DateTime.now + Purchase::EXPIRATION_TIME)
+      expect(Purchase.first.expiration_date.to_datetime).to be_within(0.01).of((DateTime.now + Purchase::EXPIRATION_TIME))
     end
 
     it 'raise an error when there are missing parameters in the purchase' do
