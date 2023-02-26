@@ -33,8 +33,10 @@ Api::V1::EpisodesController
     request list of all espisodes of a season
   GET #show
     returns the Episode object by id
+    returns an error if the Episode id does not exists
   PUT #update
-    updates the Season information
+    updates the Episode information
+    does not updates the Episode information
   DELETE #destroy
     deletes the Episode
 
@@ -46,6 +48,7 @@ Api::V1::MoviesController
     request list of all movies
   GET #show
     returns the Movie object by id
+    returns an error if the Movie id does not exists
   PUT #update
     updates the Movie information
   DELETE #destroy
@@ -67,8 +70,10 @@ Api::V1::SeasonsController
     request list of all seasons
   GET #show
     returns the Season object by id
+    returns an error if the Season id does not exists
   PUT #update
     updates the Season information
+    does not updates information if Season does not exists
   DELETE #destroy
     deletes the Season
     deletes all the episodes of a Season
@@ -112,9 +117,12 @@ Season
 User
   is not valid without valid attributes
   is valid with valid attributes
+
+Finished in 1.24 seconds (files took 3.34 seconds to load)
+55 examples, 0 failures
 ```
 
 ### Code Coverage
-All Files ( 92.01% covered at 1.6 hits/line ) <br />
+All Files ( 96.97% covered at 1.68 hits/line ) <br />
 39 files in total. <br />
-438 relevant lines, 403 lines covered and 35 lines missed. ( 92.01% )
+462 relevant lines, 448 lines covered and 14 lines missed. ( 96.97% )
