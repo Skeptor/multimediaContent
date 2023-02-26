@@ -7,10 +7,9 @@ describe Api::V1::EpisodesController, type: :request do
 
   describe 'POST #create' do
     let(:season) { create(:season) }
-    let(:episode) { create(:episode, season:) }
 
     it 'creates a episode successfully' do
-      expect { episode }.to change(Episode, :count).by(1)
+      expect { post "/api/v1/seasons/#{season.id}/episodes?title=Test&plot=Test&number=1" }.to change(Episode, :count).by(1)
     end
   end
 
@@ -41,6 +40,12 @@ describe Api::V1::EpisodesController, type: :request do
 
       expect(response).to be_successful
     end
+
+    it 'returns an error if the Episode id does not exists' do
+      expect do
+        get "/api/v1/seasons/#{season.id}/episodes/-1"
+      end.to raise_error
+    end
   end
 
   
@@ -48,12 +53,20 @@ describe Api::V1::EpisodesController, type: :request do
     let!(:season) {create(:season) }
     let(:episode) { create(:episode, season:) }
 
-    it 'updates the Season information' do
+    it 'updates the Episode information' do
       episode.title = 'Updated Title'
       
       put "/api/v1/seasons/#{season.id}/episodes/#{episode.id}", params: { title: episode.title }
 
       expect(Episode.first.title).to eq('Updated Title')
+    end
+
+    it 'does not updates the Episode information' do
+      episode.title = 'Updated Title'
+      
+      expect do
+        put "/api/v1/seasons/#{season.id}/episodes/-1", params: { title: episode.title }
+      end.to raise_error
     end
   end
 

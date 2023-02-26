@@ -6,10 +6,8 @@ require 'database_cleaner/active_record'
 describe Api::V1::MoviesController, type: :request do
   
   describe 'POST #create' do
-    let(:movie) {create(:movie) }
-
     it 'creates a movie successfully' do
-      expect { movie }.to change(Movie, :count).by(1)
+      expect { post '/api/v1/movies?title=Test&plot=Test' }.to change(Movie, :count).by(1)
     end
   end
 
@@ -37,6 +35,12 @@ describe Api::V1::MoviesController, type: :request do
 
       expect(response).to be_successful
     end
+
+    it 'returns an error if the Movie id does not exists' do
+      expect do
+        get "/api/v1/movies/-1"
+      end.to raise_error
+    end
   end
 
   describe 'PUT #update' do
@@ -48,6 +52,14 @@ describe Api::V1::MoviesController, type: :request do
       put "/api/v1/movies/#{movie.id}", params: { title: movie.title }
 
       expect(Movie.first.title).to eq('Updated Title')
+    end
+    
+    it 'does not updates information if Movie does not exists' do
+      movie.title = 'Updated Title'
+      
+      expect do
+        put "/api/v1/movies/-1", params: { title: movie.title }
+      end.to raise_error
     end
   end
 

@@ -20,7 +20,7 @@ module Api
       end
 
       def create
-        @episode = @season.comments.build(episode_params)
+        @episode = @season.episodes.build(episode_params)
 
         if @episode.save
           render json: @episode, status: 200

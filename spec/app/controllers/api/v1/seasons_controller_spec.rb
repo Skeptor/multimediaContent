@@ -6,10 +6,8 @@ require 'database_cleaner/active_record'
 describe Api::V1::SeasonsController, type: :request do
 
   describe 'POST #create' do
-    let(:season) { create(:season) }
-
     it 'creates a season successfully' do
-      expect { season }.to change(Season, :count).by(1)
+      expect { post '/api/v1/seasons?title=Test&plot=Test&number=1' }.to change(Season, :count).by(1)
     end
   end
 
@@ -37,6 +35,12 @@ describe Api::V1::SeasonsController, type: :request do
 
       expect(response).to be_successful
     end
+
+    it 'returns an error if the Season id does not exists' do
+      expect do
+        get "/api/v1/seasons/-1"
+      end.to raise_error
+    end
   end
 
   
@@ -49,6 +53,14 @@ describe Api::V1::SeasonsController, type: :request do
       put "/api/v1/seasons/#{season.id}", params: { title: season.title }
 
       expect(Season.first.title).to eq('Updated Title')
+    end
+
+    it 'does not updates information if Season does not exists' do
+      season.title = 'Updated Title'
+      
+      expect do
+        put "/api/v1/seasons/-1", params: { title: season.title }
+      end.to raise_error
     end
   end
 
