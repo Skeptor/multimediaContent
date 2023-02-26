@@ -3,19 +3,19 @@
 ## API to manage multimedia content.
 
 ## Endpoint examples
-1. Return all the movies__
+1. Return all the movies: <br />
 http://localhost:3000/api/v1/movies
 
-2. Return all the seasons with a list of the season's episodes__
+2. Return all the seasons with a list of the season's episodes: <br />
 http://localhost:3000/api/v1/seasons
 
-3. Return the movies and the seasons__
+3. Return the movies and the seasons: <br />
 http://localhost:3000/api/v1/contents
 
-4. Purchase a movie__
+4. Purchase a movie: <br />
 http://localhost:3000/api/v1/purchase/?user_id=1&content_id=1&content_type=Movie&purchase_option_id=1
 
-5. Get the library of an user__
+5. Get the library of an user: <br />
 http://localhost:3000/api/v1/users/1/library
 
 ### Capabilities:
@@ -115,6 +115,6 @@ User
 ```
 
 ### Code Coverage
-All Files ( 92.01% covered at 1.6 hits/line )__
-39 files in total.__
+All Files ( 92.01% covered at 1.6 hits/line ) <br />
+39 files in total. <br />
 438 relevant lines, 403 lines covered and 35 lines missed. ( 92.01% )
